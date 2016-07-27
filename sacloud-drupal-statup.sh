@@ -138,6 +138,8 @@ elif [ $DRUPAL_VERSION -eq 8 ]; then
   # 日本語翻訳のインポート
   drush locale-check || exit 1
   drush locale-update || exit 1
+  # crontab以外でcron taskが起動しないようにautomated cronを停止
+  drush -y vset cron_safe_threshold 0 || exit 1
 
   # 日本語訳がキャッシュにより中途半端な状態になることがあるので、キャッシュをリビルトする
   drush cr || exit 1
